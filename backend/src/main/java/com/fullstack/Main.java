@@ -3,7 +3,7 @@ package com.fullstack;
 import com.fullstack.customer.Customer;
 import com.fullstack.customer.CustomerRepository;
 import com.github.javafaker.Faker;
-import java.util.List;
+
 import java.util.Random;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
