@@ -1,0 +1,23 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "novemberfall-api",
+      "image": "novemberfall/novemberfall-api:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://awseb-e-i63mjccftt-stack-awsebrdsdatabase-x6n0hdwsdayx.cbemzbogpjig.us-west-1.rds.amazonaws.com:5432/customer"
+        }
+      ]
+    }
+  ]
+}
