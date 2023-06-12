@@ -2,8 +2,8 @@ package com.fullstack;
 
 import com.fullstack.customer.Customer;
 import com.fullstack.customer.CustomerRepository;
+import com.fullstack.customer.Gender;
 import com.github.javafaker.Faker;
-import java.util.List;
 import java.util.Random;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,12 +29,13 @@ public class Main {
             String firstName = name.firstName();
             String lastName = name.lastName();
             Random random = new Random();
+            int age = random.nextInt(16, 99);
+            Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
             Customer customer = new Customer(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",
-                    random.nextInt(16, 99)
-            );
-
+                    age,
+                    gender);
             customerRepository.save(customer);
         };
     }

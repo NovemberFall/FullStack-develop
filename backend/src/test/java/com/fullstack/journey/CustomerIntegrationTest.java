@@ -4,6 +4,7 @@ package com.fullstack.journey;
 import com.fullstack.customer.Customer;
 import com.fullstack.customer.CustomerRegistrationRequest;
 import com.fullstack.customer.CustomerUpdateRequest;
+import com.fullstack.customer.Gender;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import java.util.List;
@@ -38,8 +39,10 @@ public class CustomerIntegrationTest {
         String email = fakerName.lastName() + UUID.randomUUID() + "@gmail.com";
         int age = RANDOM.nextInt(1, 100);
 
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
         // send a post request
         webTestClient.post()
@@ -64,7 +67,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         // make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, age);
+        Customer expectedCustomer = new Customer(name, email, age, gender);
         assertThat(allCustomers)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
                 .contains(expectedCustomer);
@@ -98,8 +101,10 @@ public class CustomerIntegrationTest {
         String email = fakerName.lastName() + UUID.randomUUID() + "@gmail.com";
         int age = RANDOM.nextInt(1, 100);
 
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
         // send a post request
         webTestClient.post()
@@ -160,8 +165,10 @@ public class CustomerIntegrationTest {
         String email = fakerName.lastName() + UUID.randomUUID() + "@gmail.com";
         int age = RANDOM.nextInt(1, 100);
 
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
         // send a post request
         webTestClient.post()
@@ -218,7 +225,7 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        Customer expected = new Customer(id, newName, email, age);
+        Customer expected = new Customer(id, newName, email, age, gender);
 
         assertThat(updatedCustomer).isEqualTo(expected);
     }

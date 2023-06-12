@@ -1,7 +1,6 @@
 package com.fullstack.customer;
 
 import com.fullstack.AbstractTestcontainers;
-import java.util.Optional;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +32,8 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.save(customer);
         int id = underTest.findAll()
                 .stream()
@@ -57,8 +56,8 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.save(customer);
         int id = underTest.findAll()
                 .stream()
