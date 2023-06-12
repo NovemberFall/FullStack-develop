@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "novemberfall-api",
-      "image": "novemberfall/novemberfall-api:06.10.2023.04.56.16",
+      "image": "novemberfall/novemberfall-api:06.12.2023.08.16.24",
       "essential": true,
       "memory": 512,
       "portMappings": [
