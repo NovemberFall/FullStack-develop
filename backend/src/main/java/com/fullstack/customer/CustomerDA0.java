@@ -11,4 +11,5 @@ public interface CustomerDA0 {
     boolean existsCustomerWithId(Integer id);
     void deleteCustomerById(Integer customerId);
     void updateCustomer(Customer update);
+    Optional<Customer> selectUserByEmail(String email);
 }

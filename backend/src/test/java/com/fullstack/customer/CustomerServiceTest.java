@@ -15,6 +15,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -22,10 +23,14 @@ class CustomerServiceTest {
     @Mock
     private CustomerDA0 customerDA0;
     private CustomerService underTest;
+    private final CustomerDTOMapper customerDTOMapper = new CustomerDTOMapper();
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp() {
-        underTest = new CustomerService(customerDA0);
+        underTest = new CustomerService(customerDA0, customerDTOMapper, passwordEncoder);
     }
 
 
@@ -44,16 +49,17 @@ class CustomerServiceTest {
         // Given
         int id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
-        when(customerDA0.selectCustomerById(id))
-                .thenReturn(Optional.of(customer));
+        when(customerDA0.selectCustomerById(id)).thenReturn(Optional.of(customer));
+
+        CustomerDTO expected = customerDTOMapper.apply(customer);
 
         // When
-        Customer actual = underTest.getCustomerById(id);
+        CustomerDTO actual = underTest.getCustomer(id);
 
         // Then
-        assertThat(actual).isEqualTo(customer);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -66,7 +72,7 @@ class CustomerServiceTest {
 
         // When
         // Then
-        assertThatThrownBy(() -> underTest.getCustomerById(id))
+        assertThatThrownBy(() -> underTest.getCustomer(id))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("customer with id [%s] not found".formatted(id));
     }
@@ -79,8 +85,11 @@ class CustomerServiceTest {
         when(customerDA0.existsCustomerWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex",email,19, Gender.MALE
+                "Alex",email, "password", 19, Gender.MALE
         );
+
+        String passwordHash = "¢5554ml;f;lsd";
+        when(passwordEncoder.encode(request.password())).thenReturn(passwordHash);
 
         // When
         underTest.addCustomer(request);
@@ -97,6 +106,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(request.name());
         assertThat(capturedCustomer.getEmail()).isEqualTo(request.email());
         assertThat(capturedCustomer.getAge()).isEqualTo(request.age());
+        assertThat(capturedCustomer.getPassword()).isEqualTo(passwordHash);
     }
 
 
@@ -107,7 +117,7 @@ class CustomerServiceTest {
         when(customerDA0.existsCustomerWithEmail(email)).thenReturn(true);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex",email,19, Gender.MALE
+                "Alex",email, "password", 19, Gender.MALE
         );
 
         // When
@@ -154,7 +164,7 @@ class CustomerServiceTest {
         // Given
         int id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         when(customerDA0.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
