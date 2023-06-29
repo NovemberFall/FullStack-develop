@@ -5,9 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.Date;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,8 @@ public class JWTUtil {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(
                         Date.from(
-                                Instant.now().plus(15, ChronoUnit.DAYS)
+//                                Instant.now().plus(30, SECONDS)  // to test expiration
+                                Instant.now().plus(15, DAYS)
                         )
                 )
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)

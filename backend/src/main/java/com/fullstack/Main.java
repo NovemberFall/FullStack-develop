@@ -4,6 +4,7 @@ import com.fullstack.customer.Customer;
 import com.fullstack.customer.CustomerRepository;
 import com.fullstack.customer.Gender;
 import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import java.util.Random;
 import java.util.UUID;
 import org.springframework.boot.CommandLineRunner;
@@ -27,19 +28,21 @@ public class Main {
     CommandLineRunner runner(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             var faker = new Faker();
-            var name = faker.name();
+            Name name = faker.name();
             String firstName = name.firstName();
             String lastName = name.lastName();
             Random random = new Random();
             int age = random.nextInt(16, 99);
             Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+            String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com";
             Customer customer = new Customer(
                     firstName + " " + lastName,
-                    firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com",
-                    passwordEncoder.encode(UUID.randomUUID().toString()),
+                    email,
+                    passwordEncoder.encode("password"),
                     age,
                     gender);
             customerRepository.save(customer);
+            System.out.println(email);
         };
     }
 

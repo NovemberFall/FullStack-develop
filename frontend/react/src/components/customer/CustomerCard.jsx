@@ -19,8 +19,8 @@ import {
 } from '@chakra-ui/react';
 
 import {useRef} from 'react';
-import {deleteCustomer} from "../services/client.js";
-import {errorNotification, successNotification} from "../services/notification.jsx";
+import {deleteCustomer} from "../../services/client.js";
+import {errorNotification, successNotification} from "../../services/notification.jsx";
 import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
 export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchCustomers}) {
@@ -139,6 +139,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                             </AlertDialogOverlay>
                         </AlertDialog>
                     </Stack>
+
                 </Stack>
             </Box>
         </Center>
