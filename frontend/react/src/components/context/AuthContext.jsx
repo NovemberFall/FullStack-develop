@@ -33,6 +33,7 @@ const AuthProvider = ({children}) => {
                 console.log(jwtToken)
 
                 const decodedToken = jwtDecode(jwtToken);
+
                 setCustomer({
                     username: decodedToken.sub,
                     roles: decodedToken.scopes
