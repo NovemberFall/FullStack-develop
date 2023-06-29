@@ -40,7 +40,7 @@ public class JWTUtil {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(
                         Date.from(
-//                                Instant.now().plus(30, SECONDS)  // to test expiration
+//                                Instant.now().plus(30, SECONDS)  // to test token's expiration
                                 Instant.now().plus(15, DAYS)
                         )
                 )
