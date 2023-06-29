@@ -15,7 +15,7 @@
     },
     {
       "name": "novemberfall-api",
-      "image": "novemberfall/novemberfall-api:06.27.2023.22.53.50",
+      "image": "novemberfall/novemberfall-api:06.28.2023.00.23.02",
       "essential": true,
       "memory": 256,
       "portMappings": [
