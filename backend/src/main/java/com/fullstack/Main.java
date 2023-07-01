@@ -6,7 +6,6 @@ import com.fullstack.customer.Gender;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import java.util.Random;
-import java.util.UUID;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
